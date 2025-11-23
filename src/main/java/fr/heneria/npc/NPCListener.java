@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import java.io.File;
 import java.util.List;
 
 public class NPCListener implements Listener {
@@ -53,7 +55,10 @@ public class NPCListener implements Listener {
     }
 
     private void executeActions(Player player, String npcId) {
-        ConfigurationSection config = plugin.getConfig().getConfigurationSection("npcs." + npcId);
+        File configFile = new File(plugin.getDataFolder(), "npcs.yml");
+        if (!configFile.exists()) return;
+
+        ConfigurationSection config = YamlConfiguration.loadConfiguration(configFile).getConfigurationSection("npcs." + npcId);
         if (config == null) return;
 
         List<String> actions = config.getStringList("actions");

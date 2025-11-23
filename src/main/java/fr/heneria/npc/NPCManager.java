@@ -10,6 +10,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -21,6 +22,7 @@ import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,7 +57,11 @@ public class NPCManager {
     public void spawnAllNPCs() {
         removeAllNPCs(); // Clean up first
 
-        FileConfiguration config = plugin.getConfig();
+        File configFile = new File(plugin.getDataFolder(), "npcs.yml");
+        if (!configFile.exists()) {
+            plugin.saveResource("npcs.yml", false);
+        }
+        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
         ConfigurationSection npcsSection = config.getConfigurationSection("npcs");
 
         if (npcsSection == null) return;

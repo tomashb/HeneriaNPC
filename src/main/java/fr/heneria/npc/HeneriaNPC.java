@@ -36,6 +36,7 @@ public class HeneriaNPC extends JavaPlugin {
 
         // Load Config and Spawn NPCs
         saveDefaultConfig();
+        saveResource("npcs.yml", false); // Ensure npcs.yml is created
         npcManager.reload();
 
         getLogger().info("HeneriaNPC has been enabled!");
