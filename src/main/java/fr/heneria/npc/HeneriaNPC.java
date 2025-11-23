@@ -26,10 +26,15 @@ public class HeneriaNPC extends JavaPlugin {
         this.npcManager = new NPCManager(this);
 
         // Register Commands
-        getCommand("henerianpc").setExecutor(new NPCCommand(this));
+        NPCCommand npcCommand = new NPCCommand(this);
+        getCommand("henerianpc").setExecutor(npcCommand);
+        getCommand("henerianpc").setTabCompleter(npcCommand);
 
         // Register Listeners
         getServer().getPluginManager().registerEvents(new NPCListener(this), this);
+
+        // Start Animator
+        new NPCAnimator(npcManager).runTaskTimer(this, 0L, 2L); // Every 2 ticks
 
         // Register BungeeCord Channel
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
