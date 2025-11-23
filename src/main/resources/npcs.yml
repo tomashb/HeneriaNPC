@@ -1,0 +1,43 @@
+npcs:
+  # --- NPC BEDWARS (Exemple Garde) ---
+  bedwars_guard:
+    location: "world, 10.5, 100, 0.5, -90, 0"
+    settings:
+      show_arms: true
+      small: false
+      hide_base_plate: true
+    equipment:
+      # Tête HeadDatabase (Garde médiéval ou Bedwars)
+      helmet:
+        hdb_id: "49686"
+      chestplate: "IRON_CHESTPLATE"
+      leggings: "CHAINMAIL_LEGGINGS"
+      boots: "IRON_BOOTS"
+      main_hand: "DIAMOND_SWORD"
+      off_hand: "SHIELD"
+    hologram:
+      offset_y: 2.3 # Hauteur du texte
+      lines:
+        - "<!italic><red><b>BEDWARS</b>"
+        - "<!italic><gray>Clique pour jouer"
+    actions:
+      - "CONNECT: bedwars"
+
+  # --- NPC BOUTIQUE (Exemple Coffre Flottant) ---
+  store_npc:
+    location: "world, 0.5, 100, -10.5, 180, 0"
+    settings:
+      show_arms: true
+      small: true # Petit ArmorStand
+      hide_base_plate: true
+    equipment:
+      helmet:
+        hdb_id: "2545" # Coffre au trésor
+      # Pas d'armure, juste une tête flottante sur un petit corps
+    hologram:
+      offset_y: 1.5
+      lines:
+        - "<!italic><gradient:#ffd700:#ffa500><b>BOUTIQUE</b></gradient>"
+        # J'ai corrigé le format du gradient pour qu'il soit valide en MiniMessage
+    actions:
+      - "MESSAGE: <green>Ouverture de la boutique..."
