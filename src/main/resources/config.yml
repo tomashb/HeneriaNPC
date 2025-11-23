@@ -1,0 +1,3 @@
+# Fichier de configuration générale pour HeneriaNPC
+# Les NPCs sont configurés dans npcs.yml
+debug: false
