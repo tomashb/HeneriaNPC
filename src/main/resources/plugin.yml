@@ -8,4 +8,5 @@ commands:
   henerianpc:
     description: Commande principale
     permission: heneria.admin
-    usage: /henerianpc reload
+    usage: /henerianpc <subcommand>
+    aliases: [hnpc]
