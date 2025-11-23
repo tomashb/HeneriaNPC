@@ -6,6 +6,6 @@ depend: [HeadDatabase]
 author: Jules
 commands:
   henerianpc:
-    description: Main command for HeneriaNPC
-    permission: henerianpc.admin
+    description: Commande principale
+    permission: heneria.admin
     usage: /henerianpc reload
