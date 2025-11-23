@@ -344,6 +344,7 @@ public class NPCManager {
 
             switch (pose.toLowerCase()) {
                 case "walking":
+                case "marche":
                     double angle = Math.sin(time) * 0.5;
                     as.setLeftLegPose(new EulerAngle(angle, 0, 0));
                     as.setRightLegPose(new EulerAngle(-angle, 0, 0));
@@ -351,12 +352,14 @@ public class NPCManager {
                     as.setRightArmPose(new EulerAngle(angle, 0, 0));
                     break;
                 case "pointing":
+                case "pointer":
                     as.setRightArmPose(new EulerAngle(-Math.PI / 2, 0, 0));
                     as.setLeftArmPose(EulerAngle.ZERO);
                     as.setLeftLegPose(EulerAngle.ZERO);
                     as.setRightLegPose(EulerAngle.ZERO);
                     break;
                 case "look_down":
+                case "regard_bas":
                     as.setHeadPose(new EulerAngle(Math.PI / 4, 0, 0));
                     break;
                 default:
@@ -437,5 +440,9 @@ public class NPCManager {
 
     public boolean exists(String id) {
         return activeNPCs.containsKey(id);
+    }
+
+    public java.util.Set<String> getNPCIds() {
+        return activeNPCs.keySet();
     }
 }
