@@ -29,7 +29,7 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!sender.hasPermission("heneria.admin")) {
-            sender.sendMessage(miniMessage.deserialize("<red>Vous n'avez pas la permission d'exécuter cette commande."));
+            sender.sendMessage(plugin.getNpcManager().parseColor("<red>Vous n'avez pas la permission d'exécuter cette commande."));
             return true;
         }
 
@@ -39,7 +39,7 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
         }
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(miniMessage.deserialize("<red>Cette commande doit être exécutée par un joueur."));
+            sender.sendMessage(plugin.getNpcManager().parseColor("<red>Cette commande doit être exécutée par un joueur."));
             return true;
         }
 
@@ -48,51 +48,51 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
         switch (subCommand) {
             case "reload":
                 plugin.getNpcManager().reload();
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Configuration rechargée avec succès."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Configuration rechargée avec succès."));
                 break;
 
             case "creer":
                 if (args.length < 3) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc creer <id> <skin>"));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc creer <id> <skin>"));
                     return true;
                 }
                 plugin.getNpcManager().createNPC(args[1], args[2], player.getLocation());
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été créé."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été créé."));
                 break;
 
             case "supprimer":
                 if (args.length < 2) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc supprimer <id>"));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc supprimer <id>"));
                     return true;
                 }
                 if (!plugin.getNpcManager().exists(args[1])) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
                     return true;
                 }
                 plugin.getNpcManager().deleteNPC(args[1]);
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été supprimé."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été supprimé."));
                 break;
 
             case "tpici":
                 if (args.length < 2) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc tpici <id>"));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc tpici <id>"));
                     return true;
                 }
                 if (!plugin.getNpcManager().exists(args[1])) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
                     return true;
                 }
                 plugin.getNpcManager().moveNPC(args[1], player.getLocation());
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été téléporté ici."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Le NPC <white>" + args[1] + " <gray>a été téléporté ici."));
                 break;
 
             case "equiper":
                 if (args.length < 3) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc equiper <id> <slot>"));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc equiper <id> <slot>"));
                     return true;
                 }
                 if (!plugin.getNpcManager().exists(args[1])) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
                     return true;
                 }
 
@@ -109,53 +109,45 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
                 };
 
                 plugin.getNpcManager().updateEquipment(args[1], internalSlot, player.getInventory().getItemInMainHand());
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Équipement mis à jour pour <white>" + args[1] + "<gray> (Slot: " + slot + ")."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Équipement mis à jour pour <white>" + args[1] + "<gray> (Slot: " + slot + ")."));
                 break;
 
             case "renommer":
                 if (args.length < 3) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc renommer <id> <texte...>"));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc renommer <id> <texte...>"));
                     return true;
                 }
                 if (!plugin.getNpcManager().exists(args[1])) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
                     return true;
                 }
                 String fullText = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
-                // Color handling: Replace legacy '&' with appropriate MiniMessage logic if possible,
-                // but since strict MiniMessage is asked, we assume user uses tags.
-                // However, prompts asked to replace '&' with '§' or handle it.
-                // Let's do a simple replacement for basic colors to help the user transition.
-                // Ideally we just support MiniMessage as asked for color parsing.
-                // But to be safe for "Legacy colors OK":
-                fullText = fullText.replace("&", "§");
+                // Note: parseColor handles the color parsing now. We don't need manual & -> § replacement
+                // unless we want to normalize it before sending to manager, but manager handles it on spawn.
+                // However, we pass raw lines to manager. Manager uses parseColor on spawn.
 
-                // We split by '|' for multi-line support if needed, though API is list-based
+                // We split by '|' for multi-line support
                 List<String> lines = new ArrayList<>();
                 for (String line : fullText.split("\\|")) {
-                    // Note: if line contains '§', MiniMessage might strip it or ignore it depending on config.
-                    // We will try to convert basic legacy codes to tags if we wanted to be fancy,
-                    // but let's trust MiniMessage.builder().build() default behavior or user using tags.
-                    // Actually, let's assume the user uses MiniMessage format mostly.
                     lines.add(line);
                 }
 
                 plugin.getNpcManager().renameNPC(args[1], lines);
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Hologramme mis à jour pour <white>" + args[1] + "<gray>."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Hologramme mis à jour pour <white>" + args[1] + "<gray>."));
                 break;
 
             case "pose":
                 if (args.length < 3) {
-                     player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc pose <id> <defaut|marche|pointer|regard_bas>"));
+                     player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Usage: /hnpc pose <id> <defaut|marche|pointer|regard_bas>"));
                      return true;
                 }
                 if (!plugin.getNpcManager().exists(args[1])) {
-                    player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
+                    player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#ff5555:#aa0000>Erreur</gradient>] <red>Ce NPC n'existe pas."));
                     return true;
                 }
                 plugin.getNpcManager().setPose(args[1], args[2]);
-                player.sendMessage(miniMessage.deserialize("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Pose définie sur <white>" + args[2] + "<gray> pour <white>" + args[1] + "<gray>."));
+                player.sendMessage(plugin.getNpcManager().parseColor("<dark_gray>[<gradient:#55ff55:#00aa00>Succès</gradient>] <gray>Pose définie sur <white>" + args[2] + "<gray> pour <white>" + args[1] + "<gray>."));
                 break;
 
             case "liste":
@@ -170,14 +162,14 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage(miniMessage.deserialize("<strikethrough><gradient:#ffaa00:#ffff55>-----------</gradient></strikethrough> <gold>HENERIA NPC <strikethrough><gradient:#ffff55:#ffaa00>-----------</gradient></strikethrough>"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc creer <id> <skin> <gray>- Créer un NPC"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc tpici <id> <gray>- Téléporter ici"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc renommer <id> <texte> <gray>- Changer le nom (Couleurs OK)"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc equiper <id> <slot> <gray>- Équiper l'item en main"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc pose <id> <type> <gray>- Changer l'animation"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc supprimer <id> <gray>- Supprimer un NPC"));
-        sender.sendMessage(miniMessage.deserialize("<yellow>/hnpc liste <gray>- Liste des NPCs"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<strikethrough><gradient:#ffaa00:#ffff55>-----------</gradient></strikethrough> <gold>HENERIA NPC <strikethrough><gradient:#ffff55:#ffaa00>-----------</gradient></strikethrough>"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc creer <id> <skin> <gray>- Créer un NPC"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc tpici <id> <gray>- Téléporter ici"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc renommer <id> <texte> <gray>- Changer le nom (Couleurs OK)"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc equiper <id> <slot> <gray>- Équiper l'item en main"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc pose <id> <type> <gray>- Changer l'animation"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc supprimer <id> <gray>- Supprimer un NPC"));
+        sender.sendMessage(plugin.getNpcManager().parseColor("<yellow>/hnpc liste <gray>- Liste des NPCs"));
     }
 
     @Override
