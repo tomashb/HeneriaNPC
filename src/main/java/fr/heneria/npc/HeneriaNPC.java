@@ -13,9 +13,10 @@ public class HeneriaNPC extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Check for HeadDatabase
-        if (!getServer().getPluginManager().isPluginEnabled("HeadDatabase")) {
-            getLogger().severe("HeadDatabase is not enabled! Disabling HeneriaNPC.");
+        // 1. Vérifier si HeadDatabase est présent
+        if (getServer().getPluginManager().getPlugin("HeadDatabase") == null) {
+            getLogger().severe("ERREUR CRITIQUE: HeadDatabase n'est pas installé !");
+            getLogger().severe("Le plugin HeneriaNPC va s'éteindre.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -29,6 +30,9 @@ public class HeneriaNPC extends JavaPlugin {
 
         // Register Listeners
         getServer().getPluginManager().registerEvents(new NPCListener(this), this);
+
+        // Register BungeeCord Channel
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         // Load Config and Spawn NPCs
         saveDefaultConfig();
