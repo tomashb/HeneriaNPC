@@ -1,0 +1,11 @@
+name: HeneriaNPC
+version: 1.0
+main: fr.heneria.npc.HeneriaNPC
+api-version: 1.21
+depend: [HeadDatabase]
+author: Jules
+commands:
+  henerianpc:
+    description: Main command for HeneriaNPC
+    permission: henerianpc.admin
+    usage: /henerianpc reload
